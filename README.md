@@ -1,26 +1,20 @@
 ## bootcamp-vnt
 
-This is where you include your WebPart documentation.
+Contains some examples of using PnPJS to provision site scripts & site designs. Also some PnPJS general examples.
 
 ### Building the code
 
+* [SPFx dev setup documentation](https://docs.microsoft.com/en-us/sharepoint/dev/spfx/set-up-your-development-environment)
+* [NodeJS 8.x](https://nodejs.org/dist/latest-v8.x/node-v8.15.1-win-x64.zip)
+* [Visual Studio Code](https://code.visualstudio.com/)
+
+
 ```bash
-git clone the repo
-npm i
-npm i -g gulp
-gulp
+npm install -g yo gulp @microsoft/generator-sharepoint
+gulp trust-dev-cert
+npm install
+gulp serve --nobrowser
 ```
-
-This package produces the following:
-
-* lib/* - intermediate-stage commonjs build artifacts
-* dist/* - the bundled script, along with other resources
-* deploy/* - all resources which should be uploaded to a CDN.
 
 ### Build options
 
-gulp clean - TODO
-gulp test - TODO
-gulp serve - TODO
-gulp bundle - TODO
-gulp package-solution - TODO

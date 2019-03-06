@@ -9,10 +9,19 @@
           "manifest": "./src/webparts/pnPDemo01/PnPDemo01WebPart.manifest.json"
         }
       ]
+    },
+    "pn-p-demo-site-designs-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/pnPDemoSiteDesigns/PnPDemoSiteDesignsWebPart.js",
+          "manifest": "./src/webparts/pnPDemoSiteDesigns/PnPDemoSiteDesignsWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "PnPDemo01WebPartStrings": "lib/webparts/pnPDemo01/loc/{locale}.js"
+    "PnPDemo01WebPartStrings": "lib/webparts/pnPDemo01/loc/{locale}.js",
+    "PnPDemoSiteDesignsWebPartStrings": "lib/webparts/pnPDemoSiteDesigns/loc/{locale}.js"
   }
 }

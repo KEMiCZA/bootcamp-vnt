@@ -92,7 +92,7 @@ export default class PnPDemo01 extends React.Component<IPnPDemo01Props, Demo01St
 
     const list = sp.web.lists.getByTitle(this._pnpDemoList01Name);
     for (let i = 0; i < this._itemscount; i++) {
-      await list.items.add({});
+      await list.items.add({}, "SP.Data.PnPDemo01ListItem");
     }
 
     const t1 = performance.now();
@@ -104,14 +104,12 @@ export default class PnPDemo01 extends React.Component<IPnPDemo01Props, Demo01St
     this.setState({ ...this.state, loadingCreatingItems: true });
     const t0 = performance.now();
 
-
     const list = sp.web.lists.getByTitle(this._pnpDemoList01Name);
     const batch = sp.web.createBatch();
     for (let i = 0; i < this._itemscount; i++) {
-      list.items.inBatch(batch).add({});
+      list.items.inBatch(batch).add({}, "SP.Data.PnPDemo01ListItem");
     }
     await batch.execute();
-
 
     const t1 = performance.now();
     const timeresult = (t1 - t0);
