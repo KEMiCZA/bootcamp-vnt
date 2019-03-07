@@ -2,7 +2,7 @@ import * as React from 'react';
 import { IPnPDemoSiteDesignsProps } from './IPnPDemoSiteDesignsProps';
 import { Spinner, SpinnerSize } from 'office-ui-fabric-react/lib/Spinner';
 import { PrimaryButton } from 'office-ui-fabric-react/lib/Button';
-import { sp } from '@pnp/sp';
+import { sp, SiteScriptInfo, SiteDesignInfo } from '@pnp/sp';
 import { autobind } from '@uifabric/utilities/lib';
 import { TextField } from 'office-ui-fabric-react/lib/TextField';
 import { ChoiceGroup, IChoiceGroupOption } from 'office-ui-fabric-react/lib/ChoiceGroup';
@@ -16,6 +16,8 @@ export interface IPnPDemoSiteDesignsState {
   designTemplate: string;
   designId: string;
   siteUrl: string;
+  allSiteScripts: SiteScriptInfo[];
+  allSiteDesigns: SiteDesignInfo[];
 }
 
 export default class PnPDemoSiteDesigns extends React.Component<IPnPDemoSiteDesignsProps, IPnPDemoSiteDesignsState> {
@@ -33,7 +35,9 @@ export default class PnPDemoSiteDesigns extends React.Component<IPnPDemoSiteDesi
       designName: "",
       designTemplate: "64",
       designId: "",
-      siteUrl: ""
+      siteUrl: "",
+      allSiteScripts: [],
+      allSiteDesigns: []
     };
   }
 
@@ -88,6 +92,27 @@ export default class PnPDemoSiteDesigns extends React.Component<IPnPDemoSiteDesi
             Apply site design {loading ? loadingSpinner : null}
           </PrimaryButton>
         </p>
+
+        <h3>5) Get all site scripts</h3>
+        <p>
+          <PrimaryButton onClick={this.getAllSiteScripts} disabled={this.state.loading}>
+            Get Site Scripts {loading ? loadingSpinner : null}
+          </PrimaryButton>
+          <ul>
+            {this.state.allSiteScripts.map(x => <li>{x.Title} | {x.Id} | {x.Content}</li>)}
+          </ul>
+        </p>
+
+
+        <h3>5) Get all site designs</h3>
+        <p>
+          <PrimaryButton onClick={this.getAllSiteDesigns} disabled={this.state.loading}>
+            Get Site Designs {loading ? loadingSpinner : null}
+          </PrimaryButton>
+          <ul>
+            {this.state.allSiteDesigns.map(x => <li>{x.Title} | {x.Id} | {x.WebTemplate}</li>)}
+          </ul>
+        </p>
       </div>
     );
   }
@@ -138,5 +163,20 @@ export default class PnPDemoSiteDesigns extends React.Component<IPnPDemoSiteDesi
     this.setState({ loading: true });
     await sp.siteDesigns.applySiteDesign(this.state.designId, this.state.siteUrl);
     this.setState({ loading: false });
+  }
+
+  @autobind
+  private async getAllSiteScripts() {
+    this.setState({ loading: true });
+    const allSiteScripts = await sp.siteScripts.getSiteScripts();
+    // const siteScriptMetadata = await sp.siteScripts.getSiteScriptMetadata(scId);
+    this.setState({ loading: false, allSiteScripts: allSiteScripts });
+  }
+
+  @autobind
+  private async getAllSiteDesigns() {
+    this.setState({ loading: true });
+    const allSiteDesigns = await sp.siteDesigns.getSiteDesigns();
+    this.setState({ loading: false, allSiteDesigns: allSiteDesigns });
   }
 }
